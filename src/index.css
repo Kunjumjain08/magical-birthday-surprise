@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FAF6F0;
+    color: #362E48;
+    overflow-x: hidden;
+    touch-action: manipulation;
+  }
+}
+
+/* Glassmorphism subtle card styling */
+.glass-panel {
+  background: rgba(253, 251, 247, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 20px 40px -15px rgba(91, 78, 135, 0.08),
+    0 0 25px 0 rgba(223, 184, 108, 0.15);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 243, 250, 0.75));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 25px 50px -12px rgba(91, 78, 135, 0.12),
+    0 0 30px 2px rgba(223, 184, 108, 0.2);
+}
+
+/* Subtle noise/grain texture overlay */
+.bg-noise {
+  background-image: radial-gradient(rgba(223, 184, 108, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom magical glowing button */
+.btn-magical {
+  background: linear-gradient(135deg, #DFB86C 0%, #E8A5B8 50%, #B3A9D9 100%);
+  background-size: 200% 200%;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px -5px rgba(223, 184, 108, 0.4), 0 0 15px 0 rgba(232, 165, 184, 0.3);
+}
+
+.btn-magical:hover {
+  background-position: right center;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px -4px rgba(223, 184, 108, 0.6), 0 0 25px 5px rgba(232, 165, 184, 0.5);
+}
+
+.btn-magical:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Soft glow text utility */
+.text-glow-gold {
+  text-shadow: 0 0 15px rgba(223, 184, 108, 0.6), 0 0 30px rgba(223, 184, 108, 0.3);
+}
+
+.text-glow-lavender {
+  text-shadow: 0 0 20px rgba(179, 169, 217, 0.6);
+}
+
+/* Hide scrollbars for smooth aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF6F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8E3F5;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B3A9D9;
+}
