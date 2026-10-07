@@ -57,13 +57,15 @@ export default function BirthdayCard({ onCardOpened }) {
     if (isPageTurning) return;
     setIsPageTurning(true);
 
-    if (cardPage === 0 && onCardOpened) {
-      onCardOpened(); // Start background music on first unseal
-    }
+    const isOpeningFromCover = (cardPage === 0 && nextPageIndex === 1);
 
     setTimeout(() => {
       setCardPage(nextPageIndex);
       setIsPageTurning(false);
+
+      if (isOpeningFromCover && onCardOpened) {
+        onCardOpened(); // Start "tere bina" music ONLY AFTER card-opening animation has completely finished and card is fully open!
+      }
 
       if (nextPageIndex === 1) {
         confetti({

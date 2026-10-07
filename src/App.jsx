@@ -16,7 +16,6 @@ export default function App() {
 
   const goToCard = () => {
     setCurrentScene(1);
-    setIsMusicPlaying(true); // Start "tere bina" immediately when entering the card after clicking STEP INSIDE →
   };
 
   const handleCardOpened = () => {
