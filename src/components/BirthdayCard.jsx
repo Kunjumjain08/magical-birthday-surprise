@@ -57,15 +57,13 @@ export default function BirthdayCard({ onCardOpened }) {
     if (isPageTurning) return;
     setIsPageTurning(true);
 
-    const isOpeningFromCover = (cardPage === 0 && nextPageIndex === 1);
+    if (cardPage === 0 && onCardOpened) {
+      onCardOpened(); // Start background music on first unseal
+    }
 
     setTimeout(() => {
       setCardPage(nextPageIndex);
       setIsPageTurning(false);
-
-      if (isOpeningFromCover && onCardOpened) {
-        onCardOpened(); // Start "tere bina" music ONLY AFTER card-opening animation has completely finished and card is fully open!
-      }
 
       if (nextPageIndex === 1) {
         confetti({
@@ -301,11 +299,15 @@ export default function BirthdayCard({ onCardOpened }) {
                             }
                           }
                         }}
+                        onError={(e) => {
+                          console.error("Birthday video load error. Source:", videoRef.current?.currentSrc || birthdayConfig.birthdayVideoUrl, e);
+                        }}
                         style={{ objectFit: 'contain', objectPosition: 'center center' }}
                         className="w-full h-full rounded-xl cursor-pointer"
                       >
                         <source src={birthdayConfig.birthdayVideoUrl} type="video/mp4" />
-                        <source src="/birthday.mp4" type="video/mp4" />
+                        <source src="birthday.mp4" type="video/mp4" />
+                        <source src="./birthday.mp4" type="video/mp4" />
                       </video>
 
                       {!isVideoPlaying && (

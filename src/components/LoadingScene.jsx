@@ -97,9 +97,8 @@ export default function LoadingScene({ onComplete }) {
     setIsVideoFinished(true);
   };
 
-  // Fallback log if video file is missing or blocked
-  const handleVideoError = (e) => {
-    console.error("Critical: Failed to load or play bunny.mp4 asset at path:", birthdayConfig.bunnyVideoUrl, e);
+  // Fallback if video file is missing or blocked
+  const handleVideoError = () => {
     setHasError(true);
   };
 
@@ -149,40 +148,41 @@ export default function LoadingScene({ onComplete }) {
           ✨
         </motion.div>
 
-        {/* ================= LIVE ANIMATED BUNNY VIDEO (290px - 356px LARGER SIZE) ================= */}
+        {/* ================= 100% TRANSPARENT CANVAS-RENDERED BUNNY (220px - 260px LARGER SIZE) ================= */}
+        {/* Hidden source video element */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={handleVideoEnded}
+          onError={(e) => {
+            console.error("Bunny video load error. Source:", videoRef.current?.currentSrc || birthdayConfig.bunnyVideoUrl, e);
+            handleVideoError();
+          }}
+          style={{ display: 'none' }}
+        >
+          <source src={birthdayConfig.bunnyVideoUrl} type="video/mp4" />
+          <source src="bunny.mp4" type="video/mp4" />
+          <source src="./bunny.mp4" type="video/mp4" />
+        </video>
+
+        {/* Visible Transparent Canvas (NO black rectangle, NO frame, NO box!) */}
         <div className="relative w-[290px] h-[290px] sm:w-[356px] sm:h-[356px] flex items-center justify-center mb-2">
-          {/* Dual Canvas Chroma-Keying & GPU Blend Mode for 100% Guaranteed Animation Visibility */}
           <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
-            style={{ background: 'transparent' }}
-          />
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleVideoEnded}
-            onError={handleVideoError}
             onClick={() => {
-              if (videoRef.current && videoRef.current.paused) {
-                videoRef.current.play();
-              }
+              if (videoRef.current) videoRef.current.play();
             }}
             style={{
-              mixBlendMode: 'screen',
               background: 'transparent',
               border: 'none',
               outline: 'none',
               boxShadow: 'none',
             }}
             className="w-full h-full object-contain relative z-10 cursor-pointer"
-          >
-            <source src={birthdayConfig.bunnyVideoUrl} type="video/mp4" />
-            <source src="/bunny.mp4" type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Loading Text */}
