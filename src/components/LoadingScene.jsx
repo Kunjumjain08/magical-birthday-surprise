@@ -149,40 +149,40 @@ export default function LoadingScene({ onComplete }) {
           ✨
         </motion.div>
 
-        {/* ================= 100% TRANSPARENT CANVAS-RENDERED BUNNY (220px - 260px LARGER SIZE) ================= */}
-        {/* Hidden source video element (Using opacity:0 & absolute 1px size instead of display:none for WebKit frame decoding) */}
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={handleVideoEnded}
-          onError={handleVideoError}
-          className="opacity-0 pointer-events-none absolute top-0 left-0 w-1 h-1 -z-50"
-        >
-          <source src={birthdayConfig.bunnyVideoUrl} type="video/mp4" />
-          <source src="/bunny.mp4" type="video/mp4" />
-        </video>
-
-        {/* Visible Transparent Canvas displaying live animated bunny.mp4 with black background removed */}
+        {/* ================= LIVE ANIMATED BUNNY VIDEO (290px - 356px LARGER SIZE) ================= */}
         <div className="relative w-[290px] h-[290px] sm:w-[356px] sm:h-[356px] flex items-center justify-center mb-2">
+          {/* Dual Canvas Chroma-Keying & GPU Blend Mode for 100% Guaranteed Animation Visibility */}
           <canvas
             ref={canvasRef}
+            className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
+            style={{ background: 'transparent' }}
+          />
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={handleVideoEnded}
+            onError={handleVideoError}
             onClick={() => {
               if (videoRef.current && videoRef.current.paused) {
                 videoRef.current.play();
               }
             }}
             style={{
+              mixBlendMode: 'screen',
               background: 'transparent',
               border: 'none',
               outline: 'none',
               boxShadow: 'none',
             }}
             className="w-full h-full object-contain relative z-10 cursor-pointer"
-          />
+          >
+            <source src={birthdayConfig.bunnyVideoUrl} type="video/mp4" />
+            <source src="/bunny.mp4" type="video/mp4" />
+          </video>
         </div>
 
         {/* Loading Text */}
